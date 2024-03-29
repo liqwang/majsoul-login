@@ -4,7 +4,7 @@
 
 浏览器F12抓包太麻烦，所以干脆用了Selenium
 
-GitHub Action的Ubuntu内置了Chrome浏览器，无需手动安装，由于没有桌面环境，需要[使用headless模式启动Chrome](https://selenium.dev/blog/2023/headless-is-going-away)
+[GitHub Action的Ubuntu内置了Chrome浏览器](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#browsers-and-drivers)，无需手动安装，由于没有桌面环境，需要[使用headless模式启动Chrome](https://selenium.dev/blog/2023/headless-is-going-away)
 
 其他参考：
 - [Selenium Mouse API](https://selenium.dev/documentation/webdriver/actions_api/mouse)
