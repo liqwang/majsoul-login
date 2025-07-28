@@ -1,7 +1,7 @@
 name: Majsoul-Login
 on:
   workflow_dispatch:
-  schedule: #Every 2 hours
+  schedule: #Every 4 hours
    - cron: '0 */4 * * *'
 jobs:
   login:
