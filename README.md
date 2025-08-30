@@ -2,6 +2,10 @@
 
 ![image](https://github.com/QuanQuan-CHO/Majsoul-Login/assets/90035785/9b7fac02-79cb-4e5c-b98d-7f1788d5996d)
 
+或者自动完成某些活动任务：
+<img width="1999" height="1038" alt="image" src="https://github.com/user-attachments/assets/250c1e21-7092-4265-b75e-88eb99001c0d" />
+
+
 浏览器F12抓包太麻烦，所以干脆用了Selenium
 
 [GitHub Action的Ubuntu内置了Chrome浏览器](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#browsers-and-drivers)，无需手动安装，由于没有桌面环境，需要[使用headless模式启动Chrome](https://selenium.dev/blog/2023/headless-is-going-away)
