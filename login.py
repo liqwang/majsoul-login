@@ -22,106 +22,49 @@ for i in range(acccounts):
     options.add_argument("--window-size=1280,800")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
-    
+
     driver = webdriver.Chrome(options=options)
     driver.get("https://game.maj-soul.net/1/")
     print(f'Account {i+1} loading game...')
-    
+
     try:
         screen = WebDriverWait(driver, 60).until(
             EC.presence_of_element_located((By.TAG_NAME, "canvas"))
         )
-        print(f'Canvas found, size: {screen.size}')
     except:
         driver.save_screenshot(f"error_canvas_{i+1}.png")
         driver.quit()
         raise
-    
-    print('Waiting for game to fully load...')
-    sleep(60)
-    print('Game load wait completed')
-    
-    driver.save_screenshot(f"login_screen_{i+1}.png")
-    print('Login screen captured')
 
-    print('Trying to input email...')
+    sleep(60)
+
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 750, 180)\
+        .move_to_element_with_offset(screen, 350, -135)\
         .click()\
         .perform()
-    sleep(1)
+    sleep(2)
     ActionChains(driver)\
         .send_keys(email)\
         .perform()
-    sleep(2)
-    print('Email input attempted')
+    sleep(3)
 
-    driver.save_screenshot(f"after_email_{i+1}.png")
-    print('After email input captured')
-
-    print('Trying to input password...')
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 750, 240)\
+        .move_to_element_with_offset(screen, 350, -50)\
         .click()\
         .perform()
-    sleep(1)
+    sleep(3)
     ActionChains(driver)\
         .send_keys(passwd)\
         .perform()
-    sleep(2)
-    print('Password input attempted')
-
-    driver.save_screenshot(f"after_password_{i+1}.png")
-    print('After password input captured')
-
-    print('Clicking login button...')
-    ActionChains(driver)\
-        .move_to_element_with_offset(screen, 750, 340)\
-        .click()\
-        .perform()
-    print('Login button clicked')
-    sleep(15)
-    
-    driver.save_screenshot(f"after_login_click_{i+1}.png")
-    print('After login click captured')
-
-    print('Waiting for login process...')
-    sleep(45)
-    
-    driver.save_screenshot(f"after_login_wait_{i+1}.png")
-    print('After login wait captured')
-
-    print('Checking for server selection...')
-    sleep(5)
-    
-    ActionChains(driver)\
-        .move_to_element_with_offset(screen, 750, 100)\
-        .click()\
-        .perform()
-    sleep(5)
-
-    driver.save_screenshot(f"after_server_select_{i+1}.png")
-    print('After server select captured')
-
-    print('Waiting for game entry...')
-    sleep(30)
-
-    print('Attempting to claim monthly card...')
-    ActionChains(driver)\
-        .move_to_element_with_offset(screen, 0, 50)\
-        .click()\
-        .perform()
     sleep(3)
-    
+
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 0, 50)\
+        .move_to_element_with_offset(screen, 350, 60)\
         .click()\
         .perform()
-    sleep(3)
-    
-    print('Monthly card claim attempt completed')
-    
-    driver.save_screenshot(f"result_{i+1}.png")
-    print(f'Screenshot saved as result_{i+1}.png')
-    
+
+    sleep(60)
+    driver.save_screenshot(f"login_success_{i+1}.png")
+    print(f'Account {i+1} login completed')
+
     driver.quit()
