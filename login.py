@@ -14,21 +14,19 @@ for i in range(acccounts):
     passwd = sys.argv[1+i+acccounts]
     print('----------------------------')
 
-    # 1. 浏览器配置（反风控，GitHub必备）
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--window-size=1280,800")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     
     driver = webdriver.Chrome(options=options)
-    driver.set_window_size(1280, 800)
     driver.get("https://game.maj-soul.net/1/")
     print(f'Account {i+1} loading game...')
     
-    # 2. 等待游戏画布加载
     try:
         screen = WebDriverWait(driver, 60).until(
             EC.presence_of_element_located((By.TAG_NAME, "canvas"))
@@ -39,7 +37,6 @@ for i in range(acccounts):
         driver.quit()
         raise
     
-    # 3. 等待游戏资源加载完成
     print('Waiting for game to fully load...')
     sleep(60)
     print('Game load wait completed')
@@ -47,68 +44,80 @@ for i in range(acccounts):
     driver.save_screenshot(f"login_screen_{i+1}.png")
     print('Login screen captured')
 
-    # 4. 输入账号 - 调整坐标
     print('Trying to input email...')
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 300, -130)\
+        .move_to_element_with_offset(screen, 750, 180)\
         .click()\
+        .perform()
+    sleep(1)
+    ActionChains(driver)\
         .send_keys(email)\
         .perform()
     sleep(2)
     print('Email input attempted')
 
-    # 5. 输入密码 - 调整坐标
+    driver.save_screenshot(f"after_email_{i+1}.png")
+    print('After email input captured')
+
     print('Trying to input password...')
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 300, -50)\
+        .move_to_element_with_offset(screen, 750, 240)\
         .click()\
+        .perform()
+    sleep(1)
+    ActionChains(driver)\
         .send_keys(passwd)\
         .perform()
     sleep(2)
     print('Password input attempted')
 
-    driver.save_screenshot(f"after_input_{i+1}.png")
-    print('Input screen captured')
+    driver.save_screenshot(f"after_password_{i+1}.png")
+    print('After password input captured')
 
-    # 6. 点击登录
     print('Clicking login button...')
     ActionChains(driver)\
-        .move_to_element_with_offset(screen, 300, 30)\
+        .move_to_element_with_offset(screen, 750, 340)\
         .click()\
         .perform()
     print('Login button clicked')
-    sleep(5)
+    sleep(15)
     
-    # 7. 关闭服务器选择弹窗（如果出现）
-    driver.save_screenshot(f"before_close_{i+1}.png")
-    print('Checking for server selection dialog...')
-    
-    # 点击关闭按钮位置（弹窗右上角）
-    ActionChains(driver)\
-        .move_to_element_with_offset(screen, 300, -200)\
-        .click()\
-        .perform()
-    sleep(2)
-    
-    # 等待进入游戏
-    sleep(35)
-    print('Login success')
+    driver.save_screenshot(f"after_login_click_{i+1}.png")
+    print('After login click captured')
 
-    # 8. 领取月卡
-    print('Attempting to claim monthly card...')
+    print('Waiting for login process...')
+    sleep(45)
+    
+    driver.save_screenshot(f"after_login_wait_{i+1}.png")
+    print('After login wait captured')
+
+    print('Checking for server selection...')
     sleep(5)
     
     ActionChains(driver)\
+        .move_to_element_with_offset(screen, 750, 100)\
+        .click()\
+        .perform()
+    sleep(5)
+
+    driver.save_screenshot(f"after_server_select_{i+1}.png")
+    print('After server select captured')
+
+    print('Waiting for game entry...')
+    sleep(30)
+
+    print('Attempting to claim monthly card...')
+    ActionChains(driver)\
         .move_to_element_with_offset(screen, 0, 50)\
         .click()\
         .perform()
-    sleep(2)
+    sleep(3)
     
     ActionChains(driver)\
         .move_to_element_with_offset(screen, 0, 50)\
         .click()\
         .perform()
-    sleep(2)
+    sleep(3)
     
     print('Monthly card claim attempt completed')
     
