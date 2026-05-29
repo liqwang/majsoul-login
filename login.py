@@ -32,7 +32,6 @@ for i in range(acccounts):
             EC.presence_of_element_located((By.TAG_NAME, "canvas"))
         )
     except:
-        driver.save_screenshot(f"error_canvas_{i+1}.png")
         driver.quit()
         raise
 
@@ -64,7 +63,6 @@ for i in range(acccounts):
         .perform()
 
     sleep(60)
-    driver.save_screenshot(f"login_success_{i+1}.png")
     print(f'Account {i+1} login completed')
 
     driver.quit()
