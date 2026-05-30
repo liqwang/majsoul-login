@@ -14,6 +14,7 @@ for i in range(acccounts):
     passwd = sys.argv[1+i+acccounts]
     print('----------------------------')
 
+    #1.open browser
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -37,32 +38,35 @@ for i in range(acccounts):
 
     sleep(60)
 
+    #2.input email
     ActionChains(driver)\
         .move_to_element_with_offset(screen, 350, -135)\
         .click()\
         .perform()
-    sleep(2)
+    sleep(1)
     ActionChains(driver)\
         .send_keys(email)\
         .perform()
-    sleep(3)
+    sleep(1)
 
+    #3.input password
     ActionChains(driver)\
         .move_to_element_with_offset(screen, 350, -50)\
         .click()\
         .perform()
-    sleep(3)
+    sleep(1)
     ActionChains(driver)\
         .send_keys(passwd)\
         .perform()
-    sleep(3)
+    sleep(1)
 
+    #4.login
     ActionChains(driver)\
         .move_to_element_with_offset(screen, 350, 60)\
         .click()\
         .perform()
-
-    sleep(60)
+    print(f'Account {i+1} entering game...')
+    sleep(20)  # loading...
     print(f'Account {i+1} login completed')
 
     driver.quit()
