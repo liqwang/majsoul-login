@@ -2,7 +2,7 @@ name: Majsoul-Login
 on:
   workflow_dispatch:
   schedule: #5:00
-   - cron: '0 21 * * *'
+   - cron: '13 21 * * *'
 jobs:
   login:
     name: Majsoul-Login
