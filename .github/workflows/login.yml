@@ -1,10 +1,16 @@
 name: Majsoul-Login
 on:
   workflow_dispatch:
-  schedule: #5:13
+  schedule: # 05:13 CST
    - cron: '13 21 * * *'
+   # Keep active forks from having scheduled workflows disabled after inactivity.
+   - cron: '37 20 1 * *'
+
 jobs:
   login:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '13 21 * * *' }}
+    permissions:
+      contents: read
     name: Majsoul-Login
     runs-on: ubuntu-22.04
     steps:
@@ -16,3 +22,25 @@ jobs:
 
       - name: Majsoul login
         run: python login.py ${{ secrets.EMAIL }} ${{ secrets.PASSWD }}
+
+  keepalive:
+    if: ${{ github.event_name == 'schedule' && github.event.schedule == '37 20 1 * *' && github.event.repository.fork == true }}
+    permissions:
+      contents: write
+    name: Keep fork workflows active
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Refresh keepalive marker
+        shell: bash
+        run: |
+          date -u +'%Y-%m-%dT%H:%M:%SZ' > .github/.keepalive
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .github/.keepalive
+          git commit -m "chore(keepalive): keep scheduled workflows active"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
